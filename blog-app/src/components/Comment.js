@@ -1,10 +1,9 @@
 import React from 'react';
+import { List } from 'antd';
 
 const Comment = (props) => {
   return (
-    <div>
-      <div>{props.comment.text}</div>
-    </div>
+    <List.Item>{props.comment.text}</List.Item>
   )
 }
 

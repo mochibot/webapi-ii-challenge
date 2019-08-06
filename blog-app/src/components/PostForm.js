@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'antd';
 
 const PostForm = (props) => {
   const [post, setPost] = useState({
@@ -43,12 +44,12 @@ const PostForm = (props) => {
   }
 
   return (
-    <form onSubmit={submitPost}>
-      <input name='title' value={post.title} onChange={inputPost}/>
-      <input name='contents' value={post.contents} onChange={inputPost}/>
+    <Form onSubmit={submitPost}>
+      <input name='title' placeholder='Title' value={post.title} onChange={inputPost}/>
+      <input name='contents' placeholder='Contents' value={post.contents} onChange={inputPost}/>
       {error && <div>{error}</div>}
-      <button onClick={submitPost}>Submit</button>
-    </form>
+      <Button onClick={submitPost}>Submit</Button>
+    </Form>
   )
 }
 

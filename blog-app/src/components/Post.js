@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card } from 'antd';
+import { Card, Button, List } from 'antd';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 
@@ -39,15 +39,17 @@ const Post = (props) => {
   }
 
   return (
-    <Card title={props.post.title}>
+    <Card title={props.post.title} style={{width: '80%', margin: '20px auto'}}>
       <div>{props.post.contents}</div>
-      <div>{props.post['created_at']}</div>
-      <button onClick={(event) => props.selectPost(event, props.post)}>Edit</button>
-      <button onClick={(event) => props.deletePost(event, props.post.id)}>Delete</button>
-      <div>
+      <div>Created on: {props.post['created_at']}</div>
+      <Button onClick={(event) => props.selectPost(event, props.post)}>Edit</Button>
+      <Button onClick={(event) => props.deletePost(event, props.post.id)}>Delete</Button>
+      <Card type='inner'>
         <CommentForm addComment={addComment}/>
-        {comments.map(item => <Comment key={`comment ${item.id}`} comment={item}/>)}
-      </div>
+        <List>
+          {comments.map(item => <Comment key={`comment ${item.id}`} comment={item}/>)}
+        </List>
+      </Card>
     </Card>
   )
 }

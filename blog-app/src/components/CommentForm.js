@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Form, Button } from 'antd';
 
 const CommentForm = (props) => {
   const [comment, setComment] = useState({
@@ -26,11 +27,11 @@ const CommentForm = (props) => {
   }
 
   return (
-    <form onSubmit={submitComment}>
-      <input name='text' value={comment.text} onChange={inputComment}/>
+    <Form onSubmit={submitComment}>
+      <input name='text' value={comment.text} placeholder='Comment' onChange={inputComment}/>
       {error && <div>{error}</div>}
-      <button onClick={submitComment}>Submit</button>
-    </form>
+      <Button onClick={submitComment}>Submit</Button>
+    </Form>
   )
 }
 
