@@ -44,11 +44,14 @@ const PostForm = (props) => {
   }
 
   return (
-    <Form onSubmit={submitPost}>
+    <Form onSubmit={submitPost} className='post-form'>
       <input name='title' placeholder='Title' value={post.title} onChange={inputPost}/>
       <input name='contents' placeholder='Contents' value={post.contents} onChange={inputPost}/>
       {error && <div>{error}</div>}
-      <Button onClick={submitPost}>Submit</Button>
+      <div className='post-form-btn'>
+        <Button onClick={submitPost}>Submit</Button>
+        <Button onClick={props.closeModal}>Cancel</Button>
+      </div>
     </Form>
   )
 }

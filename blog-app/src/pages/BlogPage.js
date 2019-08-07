@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { Modal, Button } from 'antd';
 import PostList from '../components/PostList';
 import PostForm from '../components/PostForm';
 
@@ -8,6 +8,7 @@ import PostForm from '../components/PostForm';
 const BlogPage = () => {
   const [posts, setPost] = useState([]);
   const [activePost, setActivePost] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let baseURL = 'http://localhost:8000/api/posts';
 
@@ -29,6 +30,7 @@ const BlogPage = () => {
           .then(response => {
             console.log('fetching posts success: ', response);
             setPost(response.data.sort((a, b) => b.id - a.id));
+            setIsModalOpen(false);
           })
           .catch(error => {
             console.log('fetching posts error: ', error);
@@ -66,7 +68,8 @@ const BlogPage = () => {
           .then(response => {
             console.log('fetching posts success: ', response);
             setPost(response.data.sort((a, b) => b.id - a.id));
-            setActivePost(null)
+            setActivePost(null);
+            setIsModalOpen(false);
           })
           .catch(error => {
             console.log('fetching posts error: ', error);
@@ -80,11 +83,26 @@ const BlogPage = () => {
   const selectPost = (event, post) => {
     event.preventDefault();
     setActivePost(post)
+    openModal(event);
+  }
+
+  const openModal = (event) => {
+    event.preventDefault();
+    setIsModalOpen(true);
+  }
+
+  const closeModal = (event) => {
+    event.preventDefault();
+    setIsModalOpen(false);
+    setActivePost(null);
   }
 
   return (
     <div>
-      <PostForm addPost={addPost} editPost={editPost} activePost={activePost} />
+      <Modal visible={isModalOpen} footer={null} onCancel={closeModal}>
+        <PostForm addPost={addPost} editPost={editPost} activePost={activePost} closeModal={closeModal}/>  
+      </Modal>
+      <Button onClick={openModal} icon='plus-circle'>Add post</Button>
       <PostList posts={posts} deletePost={deletePost} selectPost={selectPost}/>
     </div>
   );
